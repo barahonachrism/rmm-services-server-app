@@ -5,10 +5,11 @@ spring:
   profiles:
     active: "dev"
   datasource:
-    url: jdbc:h2:mem:mydb
-    username: nubank
-    password: ^s3cr37$
-    driverClassName: org.h2.Driver
+#    url: jdbc:h2:mem:mydb
+    url: jdbc:postgresql:postgres
+    username: postgres
+    password: s3cr37n1nj40n3
+    driverClassName: org.postgresql.Driver
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
-    show-sql: false
+    show-sql: true

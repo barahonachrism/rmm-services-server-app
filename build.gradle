@@ -6,8 +6,8 @@ plugins {
     id 'jacoco'
 }
 java{
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 }
 
 sonarqube {
@@ -18,35 +18,36 @@ sonarqube {
     }
 }
 
-group = 'com.nubank'
+group = 'com.ninjaone.rmm'
 version = '0.0.1-SNAPSHOT'
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
-}
 
 repositories {
     mavenCentral()
 }
 
 ext {
-    mapstructVersion = "1.4.2.Final"
+    querydslVersion = '5.0.0'
     lombokVersion = "1.18.20"
     lombokMapstructBindingVersion = "0.2.0"
 }
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.mapstruct:mapstruct'
     implementation 'com.fasterxml.jackson.core:jackson-databind'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
-    implementation 'com.h2database:h2'
+//    implementation 'com.h2database:h2'
+    implementation 'org.postgresql:postgresql'
+    implementation 'com.querydsl:querydsl-jpa'
 
-    annotationProcessor 'org.mapstruct:mapstruct-processor'
-    annotationProcessor 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok-mapstruct-binding'
+    annotationProcessor(
+            "com.querydsl:querydsl-apt:${querydslVersion}:general",
+            "com.querydsl:querydsl-apt:${querydslVersion}:jpa",
+            "javax.persistence:javax.persistence-api",
+            "javax.annotation:javax.annotation-api",
+            "org.projectlombok:lombok"
+    )
 
     compileOnly 'org.projectlombok:lombok'
     // Test
@@ -70,14 +71,10 @@ dependencyManagement {
             entry 'cucumber-junit-platform-engine'
         }
         dependency 'org.junit.vintage:junit-vintage-engine:5.8.2'
-        dependencySet(group: 'org.mapstruct', version: "${mapstructVersion}") {
-            entry 'mapstruct'
-            entry 'mapstruct-processor'
-        }
+
         dependency 'com.fasterxml.jackson.core:jackson-databind:2.13.2'
         dependency 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.2'
-
-        dependency "org.projectlombok:lombok-mapstruct-binding:${lombokMapstructBindingVersion}"
+        dependency 'org.postgresql:postgresql:42.3.3'
 
     }
 }
@@ -100,14 +97,4 @@ jacocoTestReport {
         csv.enabled false
         html.enabled true
     }
-
-    afterEvaluate {
-        classDirectories.setFrom(files(classDirectories.files.collect {
-            fileTree(dir: it, exclude: ['uk/tw/energy/App.*','uk/tw/energy/SeedingApplicationDataConfiguration.*'])
-        }))
-    }
-}
-
-bootRun {
-    standardInput = System.in
 }
