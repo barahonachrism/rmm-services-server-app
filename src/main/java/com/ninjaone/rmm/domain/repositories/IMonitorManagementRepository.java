@@ -33,6 +33,6 @@ public interface IMonitorManagementRepository {
     void deleteDeviceServiceByServiceId(UUID serviceID);
 
     List<ServiceVo> findServicesByCustomerId(UUID customerId);
-    List<Device> findDeviceWithServicesByCustomerID(UUID customerId);
+    Double findDeviceWithServicesByCustomerID(UUID customerId);
 
 }

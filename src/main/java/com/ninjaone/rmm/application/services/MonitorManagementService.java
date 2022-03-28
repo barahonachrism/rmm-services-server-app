@@ -133,22 +133,6 @@ public class MonitorManagementService implements IMonitorManagementService {
 
     @Override
     public double calculateMontlyCostByCustomerId(UUID customerId) {
-        //Get all services enabled to customer
-        List<Device> deviceList = monitorManagementRepository.findDeviceWithServicesByCustomerID(customerId);
-        double costPerDevice = deviceList.stream().map(device ->
-                device.isHasAntivirus()?
-                device.getDeviceType().getAntivirusCost() +
-                device.getDeviceType().getDeviceManagementCost() : 0.0
-        ).reduce(0.0,(previosCost, currentCost) ->
-             (previosCost + currentCost)
-        );
-        AtomicReference<Double> costPerService = new AtomicReference<>(0.0);
-        deviceList.stream().forEach(device -> {
-            device.getDeviceServices().forEach( deviceService -> {
-                costPerService.set(costPerService.get() + deviceService.getServiceCatalog().getCost());
-            });
-        });
-
-        return costPerService.get() + costPerDevice;
+        return monitorManagementRepository.findDeviceWithServicesByCustomerID(customerId);
     }
 }

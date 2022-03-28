@@ -66,13 +66,13 @@ public class RemoteMonitoringManagementUnitTestStepDef {
 
     @Given("Device data, system name: {string}")
     public void device_data_id_device_system_name_and_type(String systemName) {
-        device = Device.builder().id(UUID.randomUUID()).systemName(systemName).deviceType(deviceType).build();
+        device = Device.builder().id(UUID.randomUUID()).systemName(systemName).deviceTypeId(deviceType.getId()).build();
     }
 
     @Given("Device data, system name: {string}, antivirus enabled: {string}")
     public void device_data_id_device_system_name_and_type(String systemName, String hasAntivirus) {
         device = Device.builder().id(UUID.randomUUID()).systemName(systemName)
-                .hasAntivirus(Boolean.valueOf(hasAntivirus)).deviceType(deviceType).build();
+                .hasAntivirus(Boolean.valueOf(hasAntivirus)).deviceTypeId(deviceType.getId()).build();
     }
 
     @Then("Added device successfully")
@@ -141,9 +141,9 @@ public class RemoteMonitoringManagementUnitTestStepDef {
 
     @Then("Added service to device successfully")
     public void added_service_to_device_successfully() {
-        deviceService = DeviceService.builder().id(UUID.randomUUID()).device(device)
-                .serviceCatalog(serviceCatalog)
-                .customer(customer)
+        deviceService = DeviceService.builder().id(UUID.randomUUID()).deviceId(device.getId())
+                .serviceCatalogId(serviceCatalog.getId())
+                .customerId(customer.getId())
                 .build();
         monitorManagementService.createDeviceService(deviceService);
     }
@@ -216,9 +216,9 @@ public class RemoteMonitoringManagementUnitTestStepDef {
     }
     @Then("Added service {string} to device successfully")
     public void added_service_to_device_successfully(String serviceId) {
-        deviceService = DeviceService.builder().id(UUID.randomUUID()).device(device)
-                .serviceCatalog(ServiceCatalog.builder().id(UUID.fromString(serviceId)).build())
-                .customer(customer)
+        deviceService = DeviceService.builder().id(UUID.randomUUID()).deviceId(device.getId())
+                .serviceCatalogId(UUID.fromString(serviceId))
+                .customerId(customer.getId())
                 .build();
         monitorManagementService.createDeviceService(deviceService);
     }
@@ -251,19 +251,19 @@ public class RemoteMonitoringManagementUnitTestStepDef {
 
         for(int i = 0; i < windowsQuantity; i++){
             Device myDevice = Device.builder().id(UUID.randomUUID()).systemName("Windows " + i)
-                    .hasAntivirus(true).deviceType(deviceTypeWindows).build();
+                    .hasAntivirus(true).deviceTypeId(deviceTypeWindows.getId()).build();
             monitorManagementService.createDevice(myDevice);
 
-            DeviceService myDeviceServiceTeamViewer = DeviceService.builder().id(UUID.randomUUID()).device(myDevice)
-                    .serviceCatalog(serviceCatalogTeamViewer)
-                    .customer(customer)
+            DeviceService myDeviceServiceTeamViewer = DeviceService.builder().id(UUID.randomUUID()).deviceId(myDevice.getId())
+                    .serviceCatalogId(serviceCatalogTeamViewer.getId())
+                    .customerId(customer.getId())
                     .build();
 
             monitorManagementService.createDeviceService(myDeviceServiceTeamViewer);
 
-            DeviceService myDeviceServiceCloudberry = DeviceService.builder().id(UUID.randomUUID()).device(myDevice)
-                    .serviceCatalog(serviceCatalogCloudBerry)
-                    .customer(customer)
+            DeviceService myDeviceServiceCloudberry = DeviceService.builder().id(UUID.randomUUID()).deviceId(myDevice.getId())
+                    .serviceCatalogId(serviceCatalogCloudBerry.getId())
+                    .customerId(customer.getId())
                     .build();
 
             monitorManagementService.createDeviceService(myDeviceServiceCloudberry);
@@ -272,19 +272,19 @@ public class RemoteMonitoringManagementUnitTestStepDef {
 
         for(int i = 0; i < macQuantity; i++){
             Device myDevice = Device.builder().id(UUID.randomUUID()).systemName("Mac " + i)
-                    .hasAntivirus(true).deviceType(deviceTypeMac).build();
+                    .hasAntivirus(true).deviceTypeId(deviceTypeMac.getId()).build();
             monitorManagementService.createDevice(myDevice);
 
-            DeviceService myDeviceServiceTeamViewer = DeviceService.builder().id(UUID.randomUUID()).device(myDevice)
-                    .serviceCatalog(serviceCatalogTeamViewer)
-                    .customer(customer)
+            DeviceService myDeviceServiceTeamViewer = DeviceService.builder().id(UUID.randomUUID()).deviceId(myDevice.getId())
+                    .serviceCatalogId(serviceCatalogTeamViewer.getId())
+                    .customerId(customer.getId())
                     .build();
 
             monitorManagementService.createDeviceService(myDeviceServiceTeamViewer);
 
-            DeviceService myDeviceServiceCloudberry = DeviceService.builder().id(UUID.randomUUID()).device(myDevice)
-                    .serviceCatalog(serviceCatalogCloudBerry)
-                    .customer(customer)
+            DeviceService myDeviceServiceCloudberry = DeviceService.builder().id(UUID.randomUUID()).deviceId(myDevice.getId())
+                    .serviceCatalogId(serviceCatalogCloudBerry.getId())
+                    .customerId(customer.getId())
                     .build();
 
             monitorManagementService.createDeviceService(myDeviceServiceCloudberry);

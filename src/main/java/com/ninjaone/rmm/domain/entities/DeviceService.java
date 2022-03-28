@@ -21,16 +21,28 @@ public class DeviceService {
     @Type(type="org.hibernate.type.PostgresUUIDType")
     private UUID id;
 
-    @ManyToOne
-    @JoinColumn(name = "device_id")
+    @Column(name = "device_id",nullable = false)
+    @Type(type="org.hibernate.type.PostgresUUIDType")
+    private UUID deviceId;
+
+    @Column(name = "service_catalog_id", nullable = false)
+    @Type(type="org.hibernate.type.PostgresUUIDType")
+    private UUID serviceCatalogId;
+
+    @Column(name = "customer_id", nullable = false)
+    @Type(type="org.hibernate.type.PostgresUUIDType")
+    private UUID customerId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "device_id", insertable = false, updatable = false)
     private Device device;
 
-    @ManyToOne
-    @JoinColumn(name = "service_catalog_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "service_catalog_id",insertable = false,updatable = false)
     private ServiceCatalog serviceCatalog;
 
-    @ManyToOne
-    @JoinColumn(name = "customer_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id",insertable = false,updatable = false)
     private Customer customer;
 
 }

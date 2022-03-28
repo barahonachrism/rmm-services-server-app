@@ -7,7 +7,9 @@ import com.ninjaone.rmm.domain.vo.ServiceVo;
 import com.ninjaone.rmm.domain.vo.QServiceVo;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.Expressions;
+import com.querydsl.jpa.impl.JPAInsertClause;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -16,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@Slf4j
 @Repository
 public class MonitorManagementRepository implements IMonitorManagementRepository {
     private EntityManager entityManager;
@@ -146,12 +149,11 @@ public class MonitorManagementRepository implements IMonitorManagementRepository
     @Override
     public DeviceService createDeviceService(DeviceService deviceService) {
         QDeviceService qDeviceService = QDeviceService.deviceService;
-        List<DeviceService> deviceServiceList = queryFactory.selectFrom(qDeviceService).fetch();
         Optional<Integer> optionalExistValue = Optional.ofNullable(queryFactory.select(Expressions.ONE)
                         .from(qDeviceService)
-                .where(qDeviceService.device.id.eq(deviceService.getDevice().getId())
-                        .and(qDeviceService.serviceCatalog.id.eq(deviceService.getServiceCatalog().getId()))
-                        .and(qDeviceService.customer.id.eq(deviceService.getCustomer().getId()))
+                .where(qDeviceService.deviceId.eq(deviceService.getDeviceId())
+                        .and(qDeviceService.serviceCatalogId.eq(deviceService.getServiceCatalogId()))
+                        .and(qDeviceService.customerId.eq(deviceService.getCustomerId()))
                 )
                 .fetchOne());
 
@@ -210,14 +212,16 @@ public class MonitorManagementRepository implements IMonitorManagementRepository
                 .where(qCustomer.id.eq(customerId)).fetch();
     }
 
-    public List<Device> findDeviceWithServicesByCustomerID(UUID customerId){
-       Query query = entityManager.createQuery("select distinct d from Device d " +
-               "inner join fetch d.deviceType dt" +
-               "inner join fetch d.deviceServices ds " +
-               "inner join fetch ds.serviceCatalog s " +
-               "where ds.customer.id =:customerId");
+    public Double findDeviceWithServicesByCustomerID(UUID customerId){
+       Query query = entityManager.createQuery("select dt.antivirusCost + dt.deviceManagementCost + sum(s.cost) as costByDevice from Device d " +
+               "inner join d.deviceType dt " +
+               "inner join d.deviceServices ds " +
+               "inner join ds.serviceCatalog s " +
+               "where ds.customer.id =:customerId " +
+               "group by d.id, dt.antivirusCost, dt.deviceManagementCost");
        query.setParameter("customerId",customerId);
-       return query.getResultList();
+       List<Double> costByDeviceList = query.getResultList();
+       return costByDeviceList.stream().reduce(0.0, (previousCost, currentCost) -> previousCost + currentCost);
     }
 
 

@@ -28,8 +28,12 @@ public class Device {
 
     private boolean hasAntivirus;
 
-    @ManyToOne(cascade = CascadeType.DETACH, optional = false)
-    @JoinColumn(name = "device_type_id", nullable = false)
+    @Column(name = "device_type_id",nullable = false)
+    @Type(type="org.hibernate.type.PostgresUUIDType")
+    private UUID deviceTypeId;
+
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.DETACH)
+    @JoinColumn(name = "device_type_id", nullable = false, insertable = false, updatable = false)
     private DeviceType deviceType;
 
     @OneToMany(mappedBy = "device")
