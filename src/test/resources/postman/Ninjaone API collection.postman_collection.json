@@ -1,0 +1,346 @@
+{
+	"info": {
+		"_postman_id": "834d9066-db26-4fcf-af84-c7ca7fea0764",
+		"name": "Ninjaone API collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"client_id\":\"pJTTsL8rQ124e8qBdRtDen1spPGPaMiH\",\r\n\"client_secret\":\"OPaf0QoWVWaHxIX_S1CZ3KEI5OUqolUsNzeM1at1hXPSI0cmasx__bQtdxgvr__1\",\r\n\"audience\":\"https://ninjaone-rmm/api\",\r\n\"grant_type\":\"client_credentials\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dev-vph4ynx3.us.auth0.com/oauth/token",
+					"protocol": "https",
+					"host": [
+						"dev-vph4ynx3",
+						"us",
+						"auth0",
+						"com"
+					],
+					"path": [
+						"oauth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Devices",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/private/devices?customerId=073c1ecf-4851-423b-874c-398ddb1ea1a3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"private",
+						"devices"
+					],
+					"query": [
+						{
+							"key": "customerId",
+							"value": "073c1ecf-4851-423b-874c-398ddb1ea1a3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get monthly cost services",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/private/services/monthly-cost?customerId=073c1ecf-4851-423b-874c-398ddb1ea1a3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"private",
+						"services",
+						"monthly-cost"
+					],
+					"query": [
+						{
+							"key": "customerId",
+							"value": "073c1ecf-4851-423b-874c-398ddb1ea1a3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Devices",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"device\": {\r\n            \"systemName\": \"Windows 0\",\r\n            \"deviceType\": \"Windows Workstation\",\r\n            \"hasAntivirus\": false,\r\n            \"deviceTypeId\": \"6ad6ab90-8371-4b78-a435-9c5b742587e4\"\r\n        },\r\n    \"customerId\" : \"073c1ecf-4851-423b-874c-398ddb1ea1a3\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/private/devices",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"private",
+						"devices"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add service",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"deviceId\":  \"7aa4ee47-39d2-4b79-9c90-0686c75d9294\",\r\n    \"customerId\": \"073c1ecf-4851-423b-874c-398ddb1ea1a3\",\r\n    \"serviceCatalogId\": \"2dc7e060-8822-4019-9bc5-e2f9b19b9895\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/private/services",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"private",
+						"services"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete service",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"deviceServiceId\":  \"f983ae48-00d7-4acc-bd7a-a69cf9a416e6\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/private/services",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"private",
+						"services"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get service",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/private/services?customerId=073c1ecf-4851-423b-874c-398ddb1ea1a3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"private",
+						"services"
+					],
+					"query": [
+						{
+							"key": "customerId",
+							"value": "073c1ecf-4851-423b-874c-398ddb1ea1a3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Devices",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"device\": {\r\n            \"id\": \"7aa4ee47-39d2-4b79-9c90-0686c75d9294\",\r\n            \"systemName\": \"Windows 2\",\r\n            \"deviceType\": \"Windows Workstation\",\r\n            \"hasAntivirus\": false,\r\n            \"deviceTypeId\": \"6ad6ab90-8371-4b78-a435-9c5b742587e4\"\r\n        },\r\n    \"customerId\" : \"073c1ecf-4851-423b-874c-398ddb1ea1a3\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/private/devices",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"private",
+						"devices"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete device",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"deviceId\": \"261089dc-9ec2-4567-80db-e39d8bb5f389\",\r\n    \"customerId\" : \"b22e17eb-371d-4ee0-b1c9-730f3e7390e7\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/private/devices",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"private",
+						"devices"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImNWNmpzX1AzMUVGQkRyV3FTSWFBWCJ9.eyJpc3MiOiJodHRwczovL2Rldi12cGg0eW54My51cy5hdXRoMC5jb20vIiwic3ViIjoicEpUVHNMOHJRMTI0ZThxQmRSdERlbjFzcFBHUGFNaUhAY2xpZW50cyIsImF1ZCI6Imh0dHBzOi8vbmluamFvbmUtcm1tL2FwaSIsImlhdCI6MTY0ODU3Mzk3OCwiZXhwIjoxNjQ4NjYwMzc4LCJhenAiOiJwSlRUc0w4clExMjRlOHFCZFJ0RGVuMXNwUEdQYU1pSCIsImd0eSI6ImNsaWVudC1jcmVkZW50aWFscyJ9.5JmNySvCo4Gmx11clmTrIWU-aRXCY11jxYp8iCmYvWpSkotJKJc_uU2MwlaDJv-dun57z3cChSPs_miCmcd1w3Jfk4FiseDH8NhUKa6qUT9BxAXAqYUX4xnjwsqVCiWuXxLHSZ3H29uFwlYzEOiAi7jEoxxgSKVcQbfM71WB49ebOL2D_1WeKfJKZU8q84ZXTSywRHPXDT6Klzju95HNr6VG4560WMZIPd2Jd75I3KssMtcOQLHJgK9CmE3oZ0gt6jfKI_P-cSbNmgsEXwxLHdVjG-U8jzqihygY_1JmUkBh1QeiRi1r2uf_XZvkF75VGQpcJwelwC7d1P4Em1T28w"
+		}
+	]
+}

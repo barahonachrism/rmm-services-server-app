@@ -10,14 +10,23 @@ spring:
         jwt:
           issuer-uri: https://dev-vph4ynx3.us.auth0.com/
   profiles:
-    active: "dev"
-  datasource:
-    url: jdbc:h2:mem:mydb;MODE=PostgreSQL
-#    url: jdbc:postgresql:postgres
-    username: postgres
-    password: s3cr37n1nj40n3
-#    driverClassName: org.postgresql.Driver
-    driverClassName: org.h2.Driver
+    active: "pro"
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
+---
+spring:
+  profiles: "pro"
+  datasource:
+    url: jdbc:postgresql:postgres
+    username: postgres
+    password: s3cr37n1nj40n3
+    driverClassName: org.postgresql.Driver
+---
+spring:
+  profiles: "dev"
+  datasource:
+    url: jdbc:h2:mem:mydb;MODE=PostgreSQL
+    username: postgres
+    password: s3cr37n1nj40n3
+    driverClassName: org.h2.Driver

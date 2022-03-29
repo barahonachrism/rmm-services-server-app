@@ -14,7 +14,6 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "api",produces = MediaType.APPLICATION_JSON_VALUE)
-@CrossOrigin(origins = "*")
 public class ServiceController {
     @Autowired
     private IMonitorManagementService monitorManagementService;

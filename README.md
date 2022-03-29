@@ -53,20 +53,34 @@ gradlew bootRun
 ```
 gradlew bootBuildImage
 ```
-6. Run application in container mode. 
+6. Run PostgreSQL database as docker container. Execute in command line, in project directory.
+```
+docker run --name ninjaone-rmm-db -p 5432:5432 -e POSTGRES_PASSWORD=s3cr37n1nj40n3 -d postgres
+docker cp src/main/resources/database-setup/backup-database.sql ninjaone-rmm-db:/var/backups
+docker exec -i ninjaone-rmm bash -c "cat /var/backups/backup-database.sql | psql -U postgres -d postgres" 
+```
+7. Run application in container mode. 
 ```
 docker run --rm --name ninjaone-rmm rmm-services-server-app:0.0.1-SNAPSHOT
 ```
-7. To view the test report, open the next file relative to this project folder
+8. To view the test report, open the next file relative to this project folder
 ```
 build/reports/tests/test/index.html
 ```
-8. To view the coverage code report, open the next file relative to this project folder
+9. To view the coverage code report, open the next file relative to this project folder
 ```
 build/reports/jacoco/test/html/index.html
 ```
-9. To view the behavior test report, open the next file relative to this project folder
+10. To view the behavior test report, open the next file relative to this project folder
 ```
 build/cucumber/report.html
 ```
 10. To view the static code analysis, open the next link https://sonarcloud.io/project/overview?id=barahonachrism_rmm-services-server-app
+11. If need run the test the api using Postman App, import the next collection api:
+```
+src/test/resources/postman/Ninjaone API collection.postman_collection.json
+```
+12. If you need a database backup, execute the next code, from command line relative to project folder
+```
+docker exec -i ninjaone-rmm pg_dump -c -U postgres postgres > src/main/resources/database-setup/backup-database.sql 
+```
