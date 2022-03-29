@@ -1,6 +1,7 @@
 package com.ninjaone.rmm.domain.repositories;
 
 import com.ninjaone.rmm.domain.entities.*;
+import com.ninjaone.rmm.domain.vo.DeviceVo;
 import com.ninjaone.rmm.domain.vo.ServiceVo;
 
 import java.util.List;
@@ -10,6 +11,8 @@ import java.util.UUID;
 public interface IMonitorManagementRepository {
     Device createDevice(Device device);
     Optional<Device> findDeviceById(UUID idDevice);
+    Optional<Device> findDeviceByIdAndCustomerId(UUID idDevice, UUID customerId);
+    List<DeviceVo> findDevicesByCustomerId(UUID customerId);
     void deleteDevice(UUID idDevice);
     Device updateDevice(Device device);
 
@@ -20,6 +23,7 @@ public interface IMonitorManagementRepository {
 
     ServiceCatalog createServiceCatalog(ServiceCatalog serviceCatalog);
     Optional<ServiceCatalog> findServiceCatalogById(UUID idServiceCatalog);
+    Optional<ServiceCatalog> findServiceCatalogByName(String nameService);
     void deleteServiceCatalog(UUID idServiceCatalog);
     ServiceCatalog updateServiceCatalog(ServiceCatalog serviceCatalog);
 
@@ -30,6 +34,7 @@ public interface IMonitorManagementRepository {
 
     DeviceService createDeviceService(DeviceService deviceService);
     void deleteDeviceService(UUID deviceServiceId);
+    void deleteDeviceServiceByDeviceId(UUID deviceId);
     void deleteDeviceServiceByServiceId(UUID serviceID);
 
     List<ServiceVo> findServicesByCustomerId(UUID customerId);

@@ -15,7 +15,7 @@ import javax.persistence.EntityManager;
 @Configuration
 public class SpringBeanConfiguration {
     @Bean
-    public ObjectMapper nubankObjectMapper(){
+    public ObjectMapper ninjaOneObjectMapper(){
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         objectMapper.registerModule(new JavaTimeModule());

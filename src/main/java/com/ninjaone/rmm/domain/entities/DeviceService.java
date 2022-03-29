@@ -25,7 +25,7 @@ public class DeviceService {
     @Type(type="org.hibernate.type.PostgresUUIDType")
     private UUID deviceId;
 
-    @Column(name = "service_catalog_id", nullable = false)
+    @Column(name = "service_catalog_id", nullable = true)
     @Type(type="org.hibernate.type.PostgresUUIDType")
     private UUID serviceCatalogId;
 

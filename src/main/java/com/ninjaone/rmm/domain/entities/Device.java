@@ -37,6 +37,6 @@ public class Device {
     private DeviceType deviceType;
 
     @OneToMany(mappedBy = "device")
-    private List<DeviceService> deviceServices = new ArrayList<>();
+    private List<DeviceService> deviceServices;
 
 }

@@ -1,15 +1,23 @@
 logging:
   level:
     root: INFO
+auth0:
+  audience: https://ninjaone-rmm/api
 spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://dev-vph4ynx3.us.auth0.com/
   profiles:
     active: "dev"
   datasource:
-#    url: jdbc:h2:mem:mydb
-    url: jdbc:postgresql:postgres
+    url: jdbc:h2:mem:mydb;MODE=PostgreSQL
+#    url: jdbc:postgresql:postgres
     username: postgres
     password: s3cr37n1nj40n3
-    driverClassName: org.postgresql.Driver
+#    driverClassName: org.postgresql.Driver
+    driverClassName: org.h2.Driver
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true

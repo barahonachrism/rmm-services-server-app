@@ -13,5 +13,5 @@ import java.util.List;
 @Getter
 @Setter
 public class BaseResponse {
-    private List<ViolationEnum> violations = new ArrayList<>();
+    private List<ErrorVo> errors = new ArrayList<>();
 }

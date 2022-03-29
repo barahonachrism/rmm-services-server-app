@@ -3,16 +3,22 @@ package com.ninjaone.rmm.infrastructure.repositories;
 import com.ninjaone.rmm.domain.entities.*;
 import com.ninjaone.rmm.domain.exceptions.ServiceManagementException;
 import com.ninjaone.rmm.domain.repositories.IMonitorManagementRepository;
+import com.ninjaone.rmm.domain.vo.DeviceVo;
+import com.ninjaone.rmm.domain.vo.QDeviceVo;
 import com.ninjaone.rmm.domain.vo.ServiceVo;
 import com.ninjaone.rmm.domain.vo.QServiceVo;
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.SubQueryExpression;
 import com.querydsl.core.types.dsl.Expressions;
+import com.querydsl.core.types.dsl.StringExpressions;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAInsertClause;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import java.util.List;
 import java.util.Optional;
@@ -41,7 +47,40 @@ public class MonitorManagementRepository implements IMonitorManagementRepository
     public Optional<Device> findDeviceById(UUID idDevice) {
         Query query = entityManager.createNamedQuery("device.deviceWithType");
         query.setParameter("deviceId",idDevice);
-        return Optional.ofNullable((Device)query.getSingleResult());
+        try{
+            return Optional.of((Device)query.getSingleResult());
+        } catch (NoResultException ex){
+            return Optional.empty();
+        }
+    }
+
+    public Optional<Device> findDeviceByIdAndCustomerId(UUID idDevice, UUID customerId){
+        QDevice qDevice = QDevice.device;
+        QDeviceService qDeviceService = QDeviceService.deviceService;
+        return Optional.ofNullable(queryFactory.selectFrom(qDevice).where(qDevice.id.eq(idDevice)
+                .and(JPAExpressions.select(
+                Expressions.ONE
+        ).from(qDeviceService).where(qDeviceService.customerId.eq(customerId)
+                .and(qDeviceService.deviceId.eq(idDevice))).exists())).fetchOne());
+    }
+
+    public List<DeviceVo> findDevicesByCustomerId(UUID customerId){
+        QDevice qDevice = QDevice.device;
+        QDeviceType qDeviceType = QDeviceType.deviceType;
+        QDeviceService qDeviceService = QDeviceService.deviceService;
+        QDeviceVo qDeviceVo = QDeviceVo.deviceVo;
+
+        return queryFactory.select(Projections.bean(DeviceVo.class,
+                        qDevice.id.as(qDeviceVo.id),
+                        qDevice.systemName.as(qDeviceVo.systemName),
+                        qDevice.deviceType.name.as(qDeviceVo.deviceType))).from(qDevice)
+                .innerJoin(qDevice.deviceType, qDeviceType)
+                .where(JPAExpressions.select(Expressions.ONE)
+                        .from(qDeviceService)
+                        .where(qDeviceService.customerId.eq(customerId)
+                        .and(qDeviceService.deviceId.eq(qDevice.id)))
+                        .exists()
+                ).fetch();
     }
 
     @Override
@@ -101,6 +140,11 @@ public class MonitorManagementRepository implements IMonitorManagementRepository
     public Optional<ServiceCatalog> findServiceCatalogById(UUID idServiceCatalog) {
         ServiceCatalog serviceCatalog = entityManager.find(ServiceCatalog.class, idServiceCatalog);
         return Optional.ofNullable(serviceCatalog);
+    }
+
+    public Optional<ServiceCatalog> findServiceCatalogByName(String nameService){
+        QServiceCatalog serviceCatalog = QServiceCatalog.serviceCatalog;
+        return Optional.ofNullable(queryFactory.selectFrom(serviceCatalog).where(serviceCatalog.name.eq(nameService)).fetchOne());
     }
 
     @Override
@@ -177,6 +221,11 @@ public class MonitorManagementRepository implements IMonitorManagementRepository
         entityManager.remove(optionalDeviceService.get());
     }
 
+    public void deleteDeviceServiceByDeviceId(UUID deviceId){
+        QDeviceService qDeviceService = QDeviceService.deviceService;
+        queryFactory.delete(qDeviceService).where(qDeviceService.deviceId.eq(deviceId)).execute();
+    }
+
     @Override
     public void deleteDeviceServiceByServiceId(UUID serviceID) {
         QDeviceService qDeviceService = QDeviceService.deviceService;
@@ -213,12 +262,12 @@ public class MonitorManagementRepository implements IMonitorManagementRepository
     }
 
     public Double findDeviceWithServicesByCustomerID(UUID customerId){
-       Query query = entityManager.createQuery("select dt.antivirusCost + dt.deviceManagementCost + sum(s.cost) as costByDevice from Device d " +
+       Query query = entityManager.createQuery("select dt.antivirusCost + sum(s.cost) as costByDevice from Device d " +
                "inner join d.deviceType dt " +
                "inner join d.deviceServices ds " +
                "inner join ds.serviceCatalog s " +
                "where ds.customer.id =:customerId " +
-               "group by d.id, dt.antivirusCost, dt.deviceManagementCost");
+               "group by d.id, dt.antivirusCost");
        query.setParameter("customerId",customerId);
        List<Double> costByDeviceList = query.getResultList();
        return costByDeviceList.stream().reduce(0.0, (previousCost, currentCost) -> previousCost + currentCost);

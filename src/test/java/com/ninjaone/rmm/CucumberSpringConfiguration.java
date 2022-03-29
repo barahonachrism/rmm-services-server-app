@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 /**
  * Configuration of Cucumber testing integrated with Spring Boot
  */
-@SpringBootTest(classes = NinjaOneRmmApplication.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = NinjaOneRmmApplication.class)
 @CucumberContextConfiguration
 public class CucumberSpringConfiguration {
     @ParameterType("true|false")

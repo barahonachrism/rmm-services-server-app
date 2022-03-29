@@ -43,7 +43,7 @@ Feature: Unit tests collection to for Remote Monitoring and Management (RMM) com
     Then Added customer successfully
     Given Device Type data, name: "Windows Server", antivirus cost: 5.0, device management cost: 4.0
     And Device data, system name: "WinSer01"
-    And Catalog service data, name: "Cloudberry backup", cost: 3.0
+    And Catalog service data, name: "Cloudberry backup 1", cost: 3.0
     Then Added device type successfully
     Then Added device successfully
     Then Added catalog service successfully
@@ -56,13 +56,13 @@ Feature: Unit tests collection to for Remote Monitoring and Management (RMM) com
     Then Added device type successfully
     And Device data, system name: "WinSer01"
     Then Added device successfully
-    And Catalog service data, name: "Cloudberry backup", cost: 3.0
+    And Catalog service data, name: "Cloudberry backup 2", cost: 3.0
     Then Added catalog service successfully
     Then Added service to device successfully
-    And Catalog service data, name: "PSA", cost: 2.0
+    And Catalog service data, name: "PSA 1", cost: 2.0
     Then Added catalog service successfully
     Then Added service to device successfully
-    And Catalog service data, name: "Cloudberry backup", cost: 1.0
+    And Catalog service data, name: "Cloudberry backup 3", cost: 1.0
     Then Added catalog service successfully
     Then Added service to device successfully
     Then Throw error "Service already exists"
