@@ -61,7 +61,7 @@ docker exec -i ninjaone-rmm-db bash -c "cat /var/backups/backup-database.sql | p
 ```
 7. Run application in container mode. 
 ```
-docker run --rm --name ninjaone-rmm -p 8080:8080 rmm-services-server-app:0.0.1-SNAPSHOT
+docker run --rm --name ninjaone-rmm -p 8080:8080 -e "SPRING_PROFILES_ACTIVE=pro" rmm-services-server-app:0.0.1-SNAPSHOT
 ```
 8. To view the test report, open the next file relative to this project folder
 ```
