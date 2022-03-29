@@ -76,7 +76,7 @@ build/reports/jacoco/test/html/index.html
 build/cucumber/report.html
 ```
 10. To view the static code analysis, open the next link https://sonarcloud.io/project/overview?id=barahonachrism_rmm-services-server-app
-11. If need run the test the api using Postman App, import the next collection api:
+11. If you need run the test the api using Postman App, import the next collection api:
 ```
 src/test/resources/postman/Ninjaone API collection.postman_collection.json
 ```
