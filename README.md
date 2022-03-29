@@ -86,11 +86,25 @@ build/reports/jacoco/test/html/index.html
 build/cucumber/report.html
 ```
 13. To view the static code analysis, open the next link https://sonarcloud.io/project/overview?id=barahonachrism_rmm-services-server-app
-14. If you need run the test the api using Postman App, import the next collection api:
+14. If you need run the test the api using Postman App, import the next collection api. Use the "Get token" Endpoint to generate access token, 
+and put this token as global variable "token" in collection Api:
 ```
 src/test/resources/postman/Ninjaone API collection.postman_collection.json
 ```
-15. If you need a database backup, execute the next code, from command line relative to project folder
+15. You can ask Auth0 for tokens for any of your authorized applications with issuing the following API call:
+```
+curl --request POST \
+  --url https://dev-vph4ynx3.us.auth0.com/oauth/token \
+  --header 'content-type: application/json' \
+  --data '{"client_id":"pJTTsL8rQ124e8qBdRtDen1spPGPaMiH","client_secret":"OPaf0QoWVWaHxIX_S1CZ3KEI5OUqolUsNzeM1at1hXPSI0cmasx__bQtdxgvr__1","audience":"https://ninjaone-rmm/api","grant_type":"client_credentials"}'
+```
+16. You can use this bearer token with an Authorization Header in your request to obtain authorized access to your API.
+```
+curl --request GET \
+  --url http://path_to_your_api/ \
+  --header 'authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImNWNmpzX1AzMUVGQkRyV3FTSWFBWCJ9.eyJpc3MiOiJodHRwczovL2Rldi12cGg0eW54My51cy5hdXRoMC5jb20vIiwic3ViIjoicEpUVHNMOHJRMTI0ZThxQmRSdERlbjFzcFBHUGFNaUhAY2xpZW50cyIsImF1ZCI6Imh0dHBzOi8vbmluamFvbmUtcm1tL2FwaSIsImlhdCI6MTY0ODU5MjQ4OCwiZXhwIjoxNjQ4Njc4ODg4LCJhenAiOiJwSlRUc0w4clExMjRlOHFCZFJ0RGVuMXNwUEdQYU1pSCIsImd0eSI6ImNsaWVudC1jcmVkZW50aWFscyJ9.WNdaLX8g-7n0hV-lQPJZehRimvWk99TiytdFLOkR0Jzg39WzffP8Qr43euf5Gb0pneMdT485dAUrnyfLt_5jJPzVnsF-BJzdpWIwbl_Uwfb_xAu59wxmb1KTun8_7aQL4_nQVZzDrJQHgXCdKSdPqPHG89e0mTHHPbz26gWVpCK_xgFoFT2iIVybeYGXGaZMQIUZfXZKakhOgySn0ssix2LY2VYzXsP5k5nE5t48v4hw825K9zzutYmlTdZ6f7VVRAt4JmAiFMfRQ-uNhiDb1IGOeAXnW2vWMgDIXgi0ZRSKBBL-Ucs57SMFaFVDhjEcdOJqmooH6R9o2kr1spErRQ'
+```
+17. If you need a database backup, execute the next code, from command line relative to project folder
 ```
 docker exec -i ninjaone-rmm pg_dump -c -U postgres postgres > src/main/resources/database-setup/backup-database.sql 
 ```
