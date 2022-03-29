@@ -10,7 +10,7 @@ spring:
         jwt:
           issuer-uri: https://dev-vph4ynx3.us.auth0.com/
   profiles:
-    active: "pro"
+    active: "dev"
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
