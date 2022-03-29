@@ -48,7 +48,7 @@ docker run --name ninjaone-rmm-db -p 5432:5432 --net ninjaone-net -e POSTGRES_PA
 docker cp src/main/resources/database-setup/backup-database.sql ninjaone-rmm-db:/var/backups
 docker exec -i ninjaone-rmm-db bash -c "cat /var/backups/backup-database.sql | psql -U postgres -d postgres" 
 ```
-4. Add host aliases for name resolution, in Windows edit as Administrartor, the file C:\Windows\System32\drivers\etc\hosts
+4. Add host aliases for name resolution, in Windows edit as Administrator, the file C:\Windows\System32\drivers\etc\hosts
 and add the following sentence.
 ```
 127.0.0.1 ninjaone-rmm-db
