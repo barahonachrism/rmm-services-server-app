@@ -61,7 +61,12 @@ docker run --rm --name ninjaone-rmm rmm-services-server-app:0.0.1-SNAPSHOT
 ```
 build/reports/tests/test/index.html
 ```
-8. To view the coverage code report, open the nex file relative to this project folder
+8. To view the coverage code report, open the next file relative to this project folder
 ```
 build/reports/jacoco/test/html/index.html
 ```
+9. To view the behavior test report, open the next file relative to this project folder
+```
+build/cucumber/report.html
+```
+10. To view the static code analysis, open the next link https://sonarcloud.io/project/overview?id=barahonachrism_rmm-services-server-app

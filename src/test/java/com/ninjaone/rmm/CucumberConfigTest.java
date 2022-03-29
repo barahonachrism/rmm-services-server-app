@@ -10,7 +10,7 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @CucumberOptions(features = "classpath:features",
         publish = true,
-        plugin = {"pretty", "html:build/cucumber/report"},
+        plugin = {"pretty", "html:build/cucumber/report.html"},
         glue = "com.ninjaone.rmm")
 public class CucumberConfigTest {
 }
