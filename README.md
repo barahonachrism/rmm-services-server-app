@@ -57,11 +57,11 @@ gradlew bootBuildImage
 ```
 docker run --name ninjaone-rmm-db -p 5432:5432 -e POSTGRES_PASSWORD=s3cr37n1nj40n3 -d postgres
 docker cp src/main/resources/database-setup/backup-database.sql ninjaone-rmm-db:/var/backups
-docker exec -i ninjaone-rmm bash -c "cat /var/backups/backup-database.sql | psql -U postgres -d postgres" 
+docker exec -i ninjaone-rmm-db bash -c "cat /var/backups/backup-database.sql | psql -U postgres -d postgres" 
 ```
 7. Run application in container mode. 
 ```
-docker run --rm --name ninjaone-rmm rmm-services-server-app:0.0.1-SNAPSHOT
+docker run --rm --name ninjaone-rmm -p 8080:8080 rmm-services-server-app:0.0.1-SNAPSHOT
 ```
 8. To view the test report, open the next file relative to this project folder
 ```
