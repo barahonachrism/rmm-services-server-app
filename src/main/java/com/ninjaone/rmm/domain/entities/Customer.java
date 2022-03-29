@@ -2,7 +2,6 @@ package com.ninjaone.rmm.domain.entities;
 
 import lombok.*;
 import org.hibernate.annotations.Type;
-import org.hibernate.type.PostgresUUIDType;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

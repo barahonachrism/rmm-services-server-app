@@ -1,10 +1,6 @@
-package com.ninjaone.rmm.infrastructure.exception;
+package com.ninjaone.rmm.domain.vo;
 
 import lombok.Data;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 @Data
 public class ErrorResponse {

@@ -1,5 +1,7 @@
 package com.ninjaone.rmm.infrastructure.exception;
 
+import com.ninjaone.rmm.domain.vo.ErrorResponse;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -19,6 +21,6 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<Object> handleAllExceptions(RuntimeException ex, WebRequest webRequest) {
         ErrorResponse error = new ErrorResponse(ex.getMessage());
-        return handleExceptionInternal(ex, error, null, HttpStatus.INTERNAL_SERVER_ERROR, webRequest);
+        return handleExceptionInternal(ex, error, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, webRequest);
     }
 }

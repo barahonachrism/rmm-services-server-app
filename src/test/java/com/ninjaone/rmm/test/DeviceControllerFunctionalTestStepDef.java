@@ -12,7 +12,7 @@ import org.springframework.http.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @Slf4j
-public class DeviceControllerFunctionalTest {
+public class DeviceControllerFunctionalTestStepDef {
     @Autowired
     private TestRestTemplate restTemplate;
     private TokenResponse tokenResponse = null;

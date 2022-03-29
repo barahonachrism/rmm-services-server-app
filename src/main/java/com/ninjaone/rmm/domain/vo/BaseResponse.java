@@ -1,6 +1,5 @@
 package com.ninjaone.rmm.domain.vo;
 
-import com.ninjaone.rmm.domain.common.ViolationEnum;
 import lombok.Getter;
 import lombok.Setter;
 
