@@ -18,7 +18,7 @@ spring:
 spring:
   profiles: "pro"
   datasource:
-    url: jdbc:postgresql:postgres
+    url: jdbc:postgresql://ninjaone-rmm-db:5432/postgres
     username: postgres
     password: s3cr37n1nj40n3
     driverClassName: org.postgresql.Driver
